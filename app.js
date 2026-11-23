@@ -1,5 +1,4 @@
 (() => {
-  const ENDPOINT = "https://formsubmit.co/ajax/remyjean646@gmail.com";
   let L;
   try {
     L = localStorage.getItem("eacc-lang");
@@ -146,37 +145,18 @@
   const f = $("#contactForm")[0];
   if (f) {
     const st = $("#status")[0];
-    f.addEventListener("submit", async (e) => {
-      e.preventDefault();
+    if (new URLSearchParams(location.search).get("sent") === "1") {
+      st.dataset.message = "ok";
+      st.style.display = "block";
+    }
+    f.addEventListener("submit", (e) => {
       f.dataset.touched = 1;
-      st.style.display = "none";
       if (!validate(f)) {
+        e.preventDefault();
         f.querySelector("[aria-invalid=true]").focus();
         return;
       }
-      const show = (m) => {
-        st.dataset.message = m;
-        st.style.display = "block";
-      };
-      try {
-        const r = await fetch(ENDPOINT, {
-          method: "POST",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(Object.fromEntries(new FormData(f))),
-        });
-        const result = await r.json();
-        if (!r.ok || (result.success !== true && result.success !== "true")) {
-          throw new Error(result.message || "FormSubmit rejected the message.");
-        }
-        f.reset();
-        show("ok");
-      } catch (x) {
-        console.error("Contact form submission failed:", x);
-        show("fail");
-      }
+      f.elements._replyto.value = f.elements.email.value;
     });
     f.addEventListener(
       "blur",
