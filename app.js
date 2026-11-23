@@ -161,8 +161,11 @@
       try {
         const r = await fetch(ENDPOINT, {
           method: "POST",
-          headers: { Accept: "application/json" },
-          body: new FormData(f),
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(Object.fromEntries(new FormData(f))),
         });
         const result = await r.json();
         if (!r.ok || (result.success !== true && result.success !== "true")) {
