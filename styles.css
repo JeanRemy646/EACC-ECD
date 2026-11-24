@@ -1362,7 +1362,7 @@ footer.f .quote {
 }
 .fc {
   position: relative;
-  height: 350px;
+  height: 470px;
   perspective: 1200px;
   cursor: pointer;
   outline-offset: 6px;
@@ -1391,12 +1391,13 @@ footer.f .quote {
   box-shadow: var(--sh);
 }
 .ff figure {
-  height: 240px;
+  height: 340px;
   border-radius: 0;
   box-shadow: none;
 }
 .ff figure img {
   height: 100%;
+  object-position: center 20%;
 }
 .fm {
   padding: 16px 20px;
