@@ -9,6 +9,10 @@
   $("#yr")[0].textContent = new Date().getFullYear();
   const menu = $("#menu")[0],
     nav = $("#nav")[0];
+  const closeMenu = () => {
+    nav.classList.remove("open");
+    menu.setAttribute("aria-expanded", "false");
+  };
   menu.onclick = () => {
     const o = nav.classList.toggle("open");
     menu.setAttribute("aria-expanded", o);
@@ -46,6 +50,7 @@
     tb.title = tb.getAttribute("aria-label");
   }
   tb.onclick = () => {
+    closeMenu();
     const n = eff() === "dark" ? "light" : "dark";
     root.dataset.theme = n;
     try {
@@ -89,6 +94,7 @@
   $(".lang button").forEach(
     (b) =>
       (b.onclick = () => {
+        closeMenu();
         L = b.dataset.l;
         try {
           localStorage.setItem("eacc-lang", L);
